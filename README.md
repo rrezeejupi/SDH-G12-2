@@ -1,4 +1,4 @@
-#JWT Authentication Console Application
+# JWT Authentication Console Application
 
 Ky projekt implementon një sistem bazik të autentikimit me JWT në Java.
 
@@ -17,7 +17,7 @@ Fjalëkalimet nuk ruhen kurrë në formë të thjeshtë (plaintext) për arsye s
 
 Në këtë projekt, përdoruesit ruhen në memorie duke përdorur një `Map` në klasën `UserDatabase`. Kjo është një simulim dhe nuk përdor një bazë të dhënash reale.
 
-## Si funksionon hashing-u me SHA-256 në Java?
+## Si funksionon hashing me SHA-256 në Java?
 
 Përdorim klasën `MessageDigest` të Java-s për të aplikuar algoritmin SHA-256 në fjalëkalimin e dhënë. Procesi është:
 
