@@ -4,7 +4,7 @@ public class Main {
         // Scanner per me marr username edhe password prej user
         // Verifiko passwordin duke e hash inputin edhe me krahasu me stored hash
         // Kur ka login te suksesshem, call JWT token generator
-        //
+
 
 
         User user = UserDatabase.getUser("alice");
