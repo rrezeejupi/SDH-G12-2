@@ -38,9 +38,11 @@ Fjalëkalimi që përdoruesi jep si input nuk krahasohet direkt me fjalëkalimin
 Nëse përdoruesi ekziston në databazë dhe hash-i i fjalëkalimit të dhënë përputhet me atë që është ruajtur:
 
 1.Konsola shfaq mesazh suksesi.
+
 2.Thirret funksioni për të gjeneruar një JWT token që do të përdoret për qasje të mbrojtur më vonë.
 
 Nëse përdoruesi nuk ekziston ose fjalëkalimi është i gabuar:
 
 1.Konsola shfaq një mesazh gabimi për përdoruesin ose për fjalëkalimin e pasaktë.
+
 2.Nuk lejohet vazhdimi pa kredenciale të sakta.
