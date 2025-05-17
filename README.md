@@ -25,9 +25,13 @@ Përdorim klasën `MessageDigest` të Java-s për të aplikuar algoritmin SHA-25
 2. Përdoret SHA-256 për të krijuar një hash byte array.
 3. Ky byte array konvertohet në një string hexadecimale për ruajtje dhe krahasim.
 
-## Si merret input-i nga përdoruesi?
-
-Përdoruesi bashkëvepron përmes terminalit (console) ku i kërkohet të fusë emrin e përdoruesit (username) dhe fjalëkalimin (password). Kjo realizohet përmes klasës Scanner, e cila lexon të dhënat që përdoruesi shkruan.
+## Rrjedha e autentikimit (login)
+1.	Përdoruesi jep username dhe password.
+2.	Sistemi kërkon në databazën simulues në memorie nëse ekziston përdoruesi me atë emër.
+3.	Nëse përdoruesi nuk ekziston, shfaqet mesazh gabimi.
+4.	Nëse ekziston, bëhet hash i fjalëkalimit të futur dhe krahasohet me hash-in e ruajtur.
+5.	Nëse përputhen, përdoruesi autentikohet dhe sistemi vazhdon me gjenerimin e JWT-së.
+6.	Nëse nuk përputhen, shfaqet mesazh gabimi për fjalëkalim të pasaktë.
 
 ## Si bëhet verifikimi i fjalëkalimit?
 
