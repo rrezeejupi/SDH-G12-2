@@ -28,10 +28,37 @@ public class Main {
 
             //call jwt
                 String token = TokenManager.generateToken(username);
-                System.out.println("Token-i juaj JWT: " + token);
+                if(token != null){
+                    System.out.println("JWT token u gjenerua me sukses:");
+                    System.out.println("Token-i juaj JWT: " + token);
 
                 // Thirr funksionin për veçorinë e mbrojtur
                 handleProtectedFeature();
+
+                    while(true) {
+                        System.out.print("Shkruaj komandën ('request_data' ose 'logout'): ");
+                        String command = scanner.nextLine();
+
+                        if (command.equalsIgnoreCase("request_data")) {
+                            System.out.println("Po qaseni në të dhënat e mbrojtura...");
+                            System.out.println("Të dhënat e mbrojtura:");
+                            System.out.println("{");
+                            System.out.println("  \"username\": \"" + user.getUsername() + "\",");
+                            System.out.println("  \"roli\": \"përdorues standard\",");
+                            System.out.println("  \"status\": \"aktiv\",");
+                            System.out.println("  \"koha\": \"" + java.time.LocalDateTime.now() + "\"");
+                            System.out.println("}");
+                        } else if (command.equalsIgnoreCase("logout")) {
+                            System.out.println("Po dilni nga sistemi...");
+                            break;
+                        } else {
+                            System.out.println("Komandë e panjohur. Provo përsëri.");
+                        }
+
+                    }
+                }else {
+                    System.out.println("Token-i nuk u gjenerua.");
+                }
             } else {
                 System.out.println("Fjalëkalimi është i pasaktë.");
             }
