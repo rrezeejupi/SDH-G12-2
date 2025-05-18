@@ -14,19 +14,19 @@ Ky projekt është zhvilluar dhe testuar në mjedisin e mëposhtëm:
 - Java SE Development Kit (JDK) 8 ose më i lartë
 - Operative System: Windows 10 / 11
 - Libraritë e përdorura (JAR files):
-  - [java-jwt-4.4.0.jar](https://github.com/auth0/java-jwt) – për menaxhimin e JSON Web Tokens (JWT)
-  - [jackson-core-2.15.2.jar](https://github.com/FasterXML/jackson-core), [jackson-databind-2.15.2.jar](https://github.com/FasterXML/jackson-databind), [jackson-annotations-2.15.2.jar](https://github.com/FasterXML/jackson-annotations) – për serializimin dhe deserializimin e JSON
+  - [java-jwt-4.4.0.jar](https://github.com/auth0/java-jwt) - për menaxhimin e JSON Web Tokens (JWT)
+  - [jackson-core-2.15.2.jar](https://github.com/FasterXML/jackson-core), [jackson-databind-2.15.2.jar](https://github.com/FasterXML/jackson-databind), [jackson-annotations-2.15.2.jar](https://github.com/FasterXML/jackson-annotations) - për serializimin dhe deserializimin e JSON
 
 
 ## Udhëzime për ekzekutimin e projektit
 
 ### 1. Përgatitja e Mjedisit
 
-Sigurohuni që keni vendosur të gjitha `.jar` librarite në të njëjtin folder ku ndodhen edhe skedarët `.java` dhe `.class` të projektit.
+Sigurohuni që keni vendosur të gjitha `.jar` librarite në të njëjtin folder ku ndodhen edhe files `.java` dhe `.class` të projektit.
 
 ### 2. Kompilimi
 
-Në terminalin tuaj, në folderin ku ndodhen skedarët e projektit, ekzekutoni komandën:
+Në terminalin tuaj, në folderin ku ndodhen files të projektit, ekzekutoni komandën:
 
 ```bash
 javac -cp ".;java-jwt-4.4.0.jar;jackson-core-2.15.2.jar;jackson-databind-2.15.2.jar;jackson-annotations-2.15.2.jar" *.java
@@ -82,12 +82,12 @@ src/
 
 ## Përshkrim i Modulave Kryesore
 
-- **Server.java** – Serveri i aplikacionit që pranon lidhje nga klienti, verifikon kredencialet, dhe gjeneron token JWT.
-- **Client.java** – Klienti që komunikon me serverin, dërgon kredencialet dhe kërkon të dhëna të mbrojtura.
-- **TokenManager.java** – Menaxhon krijimin dhe verifikimin e JSON Web Tokens.
-- **UserDatabase.java** – Ruajtja dhe menaxhimi i përdoruesve dhe kredencialeve të tyre.
-- **HashUtil.java** – Funksione për hashim të fjalëkalimeve.
-- **RSAKeyUtil.java** – Gjenerimi dhe menaxhimi i çelësave RSA për nënshkrimin e JWT-ve.
+- **Server.java** - Serveri i aplikacionit që pranon lidhje nga klienti, verifikon kredencialet, dhe gjeneron token JWT.
+- **Client.java** - Klienti që komunikon me serverin, dërgon kredencialet dhe kërkon të dhëna të mbrojtura.
+- **TokenManager.java** - Menaxhon krijimin dhe verifikimin e JSON Web Tokens.
+- **UserDatabase.java** - Ruajtja dhe menaxhimi i përdoruesve dhe kredencialeve të tyre.
+- **HashUtil.java** - Funksione për hashim të fjalëkalimeve.
+- **RSAKeyUtil.java** - Gjenerimi dhe menaxhimi i çelësave RSA për nënshkrimin e JWT-ve.
 
 ## Problemet e Njohura
 
