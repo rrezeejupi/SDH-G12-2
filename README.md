@@ -13,7 +13,7 @@ Ky projekt është zhvilluar dhe testuar në mjedisin e mëposhtëm:
 
 - Java SE Development Kit (JDK) 8 ose më i lartë
 - Operative System: Windows 10 / 11
-Libraritë e përdorura (JAR files):
+- Libraritë e përdorura (JAR files):
 - [java-jwt-4.4.0.jar](https://github.com/auth0/java-jwt) – për menaxhimin e JSON Web Tokens (JWT)
 - [jackson-core-2.15.2.jar](https://github.com/FasterXML/jackson-core), [jackson-databind-2.15.2.jar](https://github.com/FasterXML/jackson-databind), [jackson-annotations-2.15.2.jar](https://github.com/FasterXML/jackson-annotations) – për serializimin dhe deserializimin e JSON
 
