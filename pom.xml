@@ -1,26 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jwt</groupId>
-    <artifactId>jwt-auth-console</artifactId>
+    <groupId>your.group.id</groupId>
+    <artifactId>your-artifact-id</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
+    <!-- THIS IS WHERE DEPENDENCIES GO -->
     <dependencies>
-        <!-- JSON Web Token (JWT) library -->
+        <!-- Example: Java JWT dependency -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
+        <!-- You can add more dependencies here -->
     </dependencies>
 
 </project>
