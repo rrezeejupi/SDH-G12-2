@@ -1,5 +1,8 @@
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 
 public class TokenManager {
@@ -17,6 +20,27 @@ public class TokenManager {
                     .sign(algorithm); // Sign with secret key
         } catch (Exception e) {
             System.err.println("Error generating token: " + e.getMessage());
+            return null;
+        }
+    }
+    public static boolean verifyToken(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            verifier.verify(token);
+            return true;
+        } catch (JWTVerificationException e) {
+            System.err.println("Token verification failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Extract username from JWT token
+    public static String getUsernameFromToken(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getSubject();
+        } catch (Exception e) {
+            System.err.println("Error decoding token: " + e.getMessage());
             return null;
         }
     }

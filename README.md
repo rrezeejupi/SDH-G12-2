@@ -76,3 +76,46 @@ Ky informacion ndihmon në verifikimin e vlefshmërisë dhe sigurisë së token-
 ## Biblioteka dhe mënyra e nënshkrimit
 
 Për krijimin e token-it u përdor biblioteka java-jwt nga Auth0. Token-i nënshkruhet me algoritmin HMAC SHA-256 duke përdorur një çelës sekret (mysecret123), për të siguruar që token-i nuk është ndryshuar gjatë transmetimit dhe që buron nga një burim i besueshëm.
+
+## Si funksionon verifikimi i token-it?
+
+Në sistemin tonë, verifikimi i JWT token-it bëhet duke përdorur bibliotekën java-jwt. Procesi i verifikimit përfshin dy kontrollime kryesore:
+
+Kontrolli i nënshkrimit (Signature Check):
+
+1. Token-i verifikohet duke përdorur të njëjtin çelës sekret që është përdorur për ta nënshkruar atë.
+2. Biblioteka kontrollon nëse nënshkrimi i token-it është i vlefshëm.
+3. Nëse dikush tenton të ndryshojë token-in pa e ditur çelësin sekret, verifikimi do të dështojë.
+
+Kontrolli i skadimit (Expiration Check):
+
+1. Çdo token ka një kohë skadimi (5 minuta në rastin tonë).
+2. Biblioteka kontrollon nëse data aktuale është para datës së skadimit të token-it.
+
+## Veçoria e mbrojtur (Protected Feature)
+Sistemi ynë ka një veçori të mbrojtur që mund të aksesohet vetëm me një token të vlefshëm:
+Kur përdoruesi paraqet një token të vlefshëm, sistemi shfaq një mesazh sekret ("Secret data = 42").
+Kjo është një simulim i një burimi të mbrojtur që mund të jetë një faqe e veçantë, API endpoint, ose ndonjë funksionalitet tjetër i kufizuar.
+
+## Gabimet dhe trajtimi i tyre
+Disa gabime që mund të ndodhin dhe si i trajtojmë:
+
+1. Token i pavlefshëm:
+
+Shkak: Nënshkrimi i token-it nuk përputhet me çelësin sekret.  
+Trajtim: Shfaqim mesazhin "Access denied! Invalid or expired token."
+
+2. Token i skaduar:
+
+Shkak: Koha e token-it ka kaluar 5 minuta nga krijimi.  
+Trajtim: Shfaqim të njëjtin mesazh si për token të pavlefshëm.
+
+3. Token i dëmtuar:
+
+Shkak: Token-i është ndryshuar manualisht ose formatuar gabimisht.  
+Trajtim: Verifikimi dështon dhe shfaqet mesazhi i gabimit.
+
+4. Token pa të dhëna të mjaftueshme:
+
+Shkak: Token-i nuk përmban subjektin (username) ose të dhëna të tjera të nevojshme.  
+Trajtim: Verifikimi konsiderohet i dështuar
