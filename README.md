@@ -21,7 +21,7 @@ Ky projekt është zhvilluar dhe testuar në mjedisin e mëposhtëm:
 
 ### 1. Përgatitja e Mjedisit
 
-Sigurohuni që keni vendosur të gjitha `.jar` bibliotekat në të njëjtin folder ku ndodhen edhe skedarët `.java` dhe `.class` të projektit.
+Sigurohuni që keni vendosur të gjitha `.jar` librarite në të njëjtin folder ku ndodhen edhe skedarët `.java` dhe `.class` të projektit.
 
 ### 2. Kompilimi
 
