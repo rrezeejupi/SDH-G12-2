@@ -1,5 +1,5 @@
 
-# Projekti: Autentifikimi me JWT në Java
+# Autentifikimi me JWT në Java
 
 Ky projekt implementon një sistem autentifikimi klient-server duke përdorur JSON Web Tokens (JWT) për menaxhimin e sesioneve dhe sigurimin e të dhënave.
 
