@@ -26,6 +26,13 @@ public class Main {
             System.out.println("Stored Hashed Password: " + user.getHashedPassword());
 
             //call jwt
+                String token = TokenManager.generateToken(username);
+                if (token != null) {
+                    System.out.println("JWT Token u gjenerua me sukses:");
+                    System.out.println(token);
+                } else {
+                    System.out.println("Nuk u gjenerua token.");
+                }
 
             } else {
                 System.out.println("Fjalëkalimi është i pasaktë.");
