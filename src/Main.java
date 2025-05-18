@@ -15,6 +15,8 @@ public class Main {
         System.out.print("Shkruaj fjalëkalimin: ");
         String password = scanner.nextLine();
 
+        // Emri duhet të jetë i shkruar saktë nëse shkruhet psh Alice ose ALICE,
+        // aplikacioni nuk do ta gjejë sepse është case-sensitive
 
         User user = UserDatabase.getUser(username);
 
@@ -38,7 +40,7 @@ public class Main {
                 System.out.println("Fjalëkalimi është i pasaktë.");
             }
         } else {
-            System.out.println("User not found.");
+            System.out.println("Përdoruesi nuk u gjet.");
         }
         scanner.close();
     }
