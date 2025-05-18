@@ -8,7 +8,9 @@ Ky projekt implementon një sistem bazik të autentikimit me JWT në Java.
 - **User.java** – klasa që përfaqëson një përdorues me `username` dhe `hashedPassword`.
 - **UserDatabase.java** – një “bazë e të dhënave” në memorie që mban përdoruesit e paracaktuar.
 - **HashUtil.java** – klasa për hashing të fjalëkalimeve duke përdorur algoritmin SHA-256.
-
+- **TokenManager.java** – gjeneron JWT me username, kohë lëshimi dhe skadimi.
+- **TokenManagerTest.java** –  teston gjenerimin, ndarjen dhe dekodimin e tokenit.
+  
 ## Pse përdorim hashing për fjalëkalimet?
 
 Fjalëkalimet nuk ruhen kurrë në formë të thjeshtë (plaintext) për arsye sigurie. Nëse dikush merr akses në të dhënat, fjalëkalimet e hash-uara janë të mbrojtura dhe nuk mund të lexohet fjalëkalimi origjinal. Hashing është një proces njëkahësh që e bën të pamundur kthimin e vlerës së hash-it në fjalëkalimin origjinal.
@@ -48,3 +50,29 @@ Nëse përdoruesi nuk ekziston ose fjalëkalimi është i gabuar:
 
 1. Konsola shfaq një mesazh gabimi për përdoruesin ose për fjalëkalimin e pasaktë.
 2. Nuk lejohet vazhdimi pa kredenciale të sakta.
+
+## Çfarë është JWT dhe për çfarë përdoret?
+
+JWT (JSON Web Token) është një standard për sigurimin e informacionit në formë të koduar që përdoret kryesisht për autentikim dhe autorizim. Ai lejon shkëmbimin e sigurt të informacionit midis palëve, pa pasur nevojë të ruhet sesioni në server.
+
+## Struktura e Token-it
+
+JWT përbëhet nga tri pjesë:
+
+1. Header – përmban informacion mbi algoritmin e nënshkrimit dhe llojin e token-it (p.sh. HS256 dhe JWT).
+2. Payload – përmban deklaratat (claims), si identiteti i përdoruesit dhe kohët e krijimit dhe skadimit.
+3. Signature – është nënshkrimi i token-it që siguron integritetin dhe autenticitetin e të dhënave.
+
+## Informacioni në Payload dhe pse përdoret
+
+Payload përmban informacion të rëndësishëm, si:
+
+1. sub - identifikon përdoruesin (p.sh. emrin e përdoruesit), që është i rëndësishëm për autentikimin.
+2. iat - koha kur token-i u krijua.
+3. exp - koha kur token-i skadon, për të parandaluar përdorimin e tij pas periudhës së vlefshmërisë
+
+Ky informacion ndihmon në verifikimin e vlefshmërisë dhe sigurisë së token-it.
+
+## Biblioteka dhe mënyra e nënshkrimit
+
+Për krijimin e token-it u përdor biblioteka java-jwt nga Auth0. Token-i nënshkruhet me algoritmin HMAC SHA-256 duke përdorur një çelës sekret (mysecret123), për të siguruar që token-i nuk është ndryshuar gjatë transmetimit dhe që buron nga një burim i besueshëm.
