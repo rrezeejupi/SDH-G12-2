@@ -1,121 +1,50 @@
-# JWT Authentication Console Application
 
-Ky projekt implementon një sistem bazik të autentikimit me JWT në Java.
+# Projekti: Autentifikimi me JWT në Java
 
-## Struktura e Projektit (deri tash)
+Ky projekt implementon një sistem autentifikimi klient-server duke përdorur JSON Web Tokens (JWT) për menaxhimin e sesioneve dhe sigurimin e të dhënave.
 
-- **Main.java** – pika kryesore hyrëse e programit.
-- **User.java** – klasa që përfaqëson një përdorues me `username` dhe `hashedPassword`.
-- **UserDatabase.java** – një “bazë e të dhënave” në memorie që mban përdoruesit e paracaktuar.
-- **HashUtil.java** – klasa për hashing të fjalëkalimeve duke përdorur algoritmin SHA-256.
-- **TokenManager.java** – gjeneron JWT me username, kohë lëshimi dhe skadimi.
-- **TokenManagerTest.java** –  teston gjenerimin, ndarjen dhe dekodimin e tokenit.
-  
-## Pse përdorim hashing për fjalëkalimet?
+## Përshkrimi i Projektit
 
-Fjalëkalimet nuk ruhen kurrë në formë të thjeshtë (plaintext) për arsye sigurie. Nëse dikush merr akses në të dhënat, fjalëkalimet e hash-uara janë të mbrojtura dhe nuk mund të lexohet fjalëkalimi origjinal. Hashing është një proces njëkahësh që e bën të pamundur kthimin e vlerës së hash-it në fjalëkalimin origjinal.
+Ky aplikacion përbëhet nga një server dhe një klient që komunikojnë nëpërmjet sockets. Serveri pranon kredencialet e përdoruesit, i verifikon ato, dhe në rast suksesi gjeneron një JWT të nënshkruar me çelës RSA. Klienti përdor tokenin për të kërkuar të dhëna të mbrojtura nga serveri.
 
-## Simulimi i Bazës së të Dhënave
+## Mjedisi i Zhvillimit
 
-Në këtë projekt, përdoruesit ruhen në memorie duke përdorur një `Map` në klasën `UserDatabase`. Kjo është një simulim dhe nuk përdor një bazë të dhënash reale.
+Ky projekt është zhvilluar dhe testuar në mjedisin e mëposhtëm:
 
-## Si funksionon hashing me SHA-256 në Java?
+- Java SE Development Kit (JDK) 8 ose më i lartë
+- Operative System: Windows 10 / 11
+- Libraritë e përdorura (JAR files):
+  - `java-jwt-4.4.0.jar` - për menaxhimin e JSON Web Tokens (JWT)
+  - `jackson-core-2.15.2.jar`, `jackson-databind-2.15.2.jar`, `jackson-annotations-2.15.2.jar` - për serializimin dhe deserializimin e JSON
 
-Përdorim klasën `MessageDigest` të Java-s për të aplikuar algoritmin SHA-256 në fjalëkalimin e dhënë. Procesi është:
+## Udhëzime për ekzekutimin e projektit
 
-1. Fjalëkalimi konvertohet në bytes.
-2. Përdoret SHA-256 për të krijuar një hash byte array.
-3. Ky byte array konvertohet në një string hexadecimale për ruajtje dhe krahasim.
+### 1. Përgatitja e Mjedisit
 
-## Rrjedha e autentikimit (login)
-1.	Përdoruesi jep username dhe password.
-2.	Sistemi kërkon në databazën simulues në memorie nëse ekziston përdoruesi me atë emër.
-3.	Nëse përdoruesi nuk ekziston, shfaqet mesazh gabimi.
-4.	Nëse ekziston, bëhet hash i fjalëkalimit të futur dhe krahasohet me hash-in e ruajtur.
-5.	Nëse përputhen, përdoruesi autentikohet dhe sistemi vazhdon me gjenerimin e JWT-së.
-6.	Nëse nuk përputhen, shfaqet mesazh gabimi për fjalëkalim të pasaktë.
+Sigurohuni që keni vendosur të gjitha `.jar` bibliotekat në të njëjtin folder ku ndodhen edhe skedarët `.java` dhe `.class` të projektit.
 
-## Si bëhet verifikimi i fjalëkalimit?
+### 2. Kompilimi
 
-Fjalëkalimi që përdoruesi jep si input nuk krahasohet direkt me fjalëkalimin e ruajtur. Në vend të kësaj, përdoret një funksion hash-i për ta transformuar fjalëkalimin në një vlerë të koduar (hashed) duke përdorur algoritmin SHA-256. Ky hash krahasohet më pas me hash-in e ruajtur për përdoruesin në databazë.
+Në terminalin tuaj, në folderin ku ndodhen skedarët e projektit, ekzekutoni komandën:
 
-## Si funksionon logjika e suksesit ose dështimit gjatë login-it?
+```bash
+javac -cp ".;java-jwt-4.4.0.jar;jackson-core-2.15.2.jar;jackson-databind-2.15.2.jar;jackson-annotations-2.15.2.jar" *.java
+```
 
-Nëse përdoruesi ekziston në databazë dhe hash-i i fjalëkalimit të dhënë përputhet me atë që është ruajtur:
+### 3. Nisja e Serverit
 
-1. Konsola shfaq mesazh suksesi.
-2. Thirret funksioni për të gjeneruar një JWT token që do të përdoret për qasje të mbrojtur më vonë.
+Pasi të jetë kompiluar, nisni serverin me komandën:
 
-Nëse përdoruesi nuk ekziston ose fjalëkalimi është i gabuar:
+```bash
+java -cp ".;java-jwt-4.4.0.jar;jackson-core-2.15.2.jar;jackson-databind-2.15.2.jar;jackson-annotations-2.15.2.jar" Server
+```
 
-1. Konsola shfaq një mesazh gabimi për përdoruesin ose për fjalëkalimin e pasaktë.
-2. Nuk lejohet vazhdimi pa kredenciale të sakta.
+Serveri do të presë për lidhje nga klienti.
 
-## Çfarë është JWT dhe për çfarë përdoret?
+### 4. Nisja e Klientit
 
-JWT (JSON Web Token) është një standard për sigurimin e informacionit në formë të koduar që përdoret kryesisht për autentikim dhe autorizim. Ai lejon shkëmbimin e sigurt të informacionit midis palëve, pa pasur nevojë të ruhet sesioni në server.
+Në një dritare tjetër terminali, nisni klientin me komandën:
 
-## Struktura e Token-it
-
-JWT përbëhet nga tri pjesë:
-
-1. Header – përmban informacion mbi algoritmin e nënshkrimit dhe llojin e token-it (p.sh. HS256 dhe JWT).
-2. Payload – përmban deklaratat (claims), si identiteti i përdoruesit dhe kohët e krijimit dhe skadimit.
-3. Signature – është nënshkrimi i token-it që siguron integritetin dhe autenticitetin e të dhënave.
-
-## Informacioni në Payload dhe pse përdoret
-
-Payload përmban informacion të rëndësishëm, si:
-
-1. sub - identifikon përdoruesin (p.sh. emrin e përdoruesit), që është i rëndësishëm për autentikimin.
-2. iat - koha kur token-i u krijua.
-3. exp - koha kur token-i skadon, për të parandaluar përdorimin e tij pas periudhës së vlefshmërisë
-
-Ky informacion ndihmon në verifikimin e vlefshmërisë dhe sigurisë së token-it.
-
-## Biblioteka dhe mënyra e nënshkrimit
-
-Për krijimin e token-it u përdor biblioteka java-jwt nga Auth0. Token-i nënshkruhet me algoritmin HMAC SHA-256 duke përdorur një çelës sekret (mysecret123), për të siguruar që token-i nuk është ndryshuar gjatë transmetimit dhe që buron nga një burim i besueshëm.
-
-## Si funksionon verifikimi i token-it?
-
-Në sistemin tonë, verifikimi i JWT token-it bëhet duke përdorur bibliotekën java-jwt. Procesi i verifikimit përfshin dy kontrollime kryesore:
-
-Kontrolli i nënshkrimit (Signature Check):
-
-1. Token-i verifikohet duke përdorur të njëjtin çelës sekret që është përdorur për ta nënshkruar atë.
-2. Biblioteka kontrollon nëse nënshkrimi i token-it është i vlefshëm.
-3. Nëse dikush tenton të ndryshojë token-in pa e ditur çelësin sekret, verifikimi do të dështojë.
-
-Kontrolli i skadimit (Expiration Check):
-
-1. Çdo token ka një kohë skadimi (5 minuta në rastin tonë).
-2. Biblioteka kontrollon nëse data aktuale është para datës së skadimit të token-it.
-
-## Veçoria e mbrojtur (Protected Feature)
-Sistemi ynë ka një veçori të mbrojtur që mund të aksesohet vetëm me një token të vlefshëm:
-Kur përdoruesi paraqet një token të vlefshëm, sistemi shfaq një mesazh sekret ("Secret data = 42").
-Kjo është një simulim i një burimi të mbrojtur që mund të jetë një faqe e veçantë, API endpoint, ose ndonjë funksionalitet tjetër i kufizuar.
-
-## Gabimet dhe trajtimi i tyre
-Disa gabime që mund të ndodhin dhe si i trajtojmë:
-
-1. Token i pavlefshëm:
-
-Shkak: Nënshkrimi i token-it nuk përputhet me çelësin sekret.  
-Trajtim: Shfaqim mesazhin "Access denied! Invalid or expired token."
-
-2. Token i skaduar:
-
-Shkak: Koha e token-it ka kaluar 5 minuta nga krijimi.  
-Trajtim: Shfaqim të njëjtin mesazh si për token të pavlefshëm.
-
-3. Token i dëmtuar:
-
-Shkak: Token-i është ndryshuar manualisht ose formatuar gabimisht.  
-Trajtim: Verifikimi dështon dhe shfaqet mesazhi i gabimit.
-
-4. Token pa të dhëna të mjaftueshme:
-
-Shkak: Token-i nuk përmban subjektin (username) ose të dhëna të tjera të nevojshme.  
-Trajtim: Verifikimi konsiderohet i dështuar
+```bash
+java -cp ".;java-jwt-4.4.0.jar;jackson-core-2.15.2.jar;jackson-databind-2.15.2.jar;jackson-annotations-2.15.2.jar" Client
+```
